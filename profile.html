@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - Muhammad Aidil Azam | Gamers Modern</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        /* ================= GLOBAL ================= */
+        body {
+            margin: 0;
+            font-family: 'Orbitron', monospace;
+            background: url('images/profile_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-menu-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar a {
+            padding: 10px 14px;
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            text-shadow: 0 0 5px #00ffff;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            background: #00ffff;
+            color: #0d0d0d;
+            text-shadow: 0 0 15px #ff00ff;
+        }
+
+        #digitalClock {
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border: 2px solid #00ffff;
+            border-radius: 6px;
+            text-align: center;
+            text-shadow: 0 0 5px #00ffff, 0 0 15px #ff00ff;
+            position: absolute;
+            right: 0;
+        }
+
+        .navbar-visualizer {
+            width: 100%;
+            height: 20px;
+            display: flex;
+            gap: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .navbar-visualizer .bar {
+            flex: 1;
+            height: 5px;
+            background: linear-gradient(90deg, cyan, magenta, purple, cyan);
+            border-radius: 2px;
+            transition: height 0.05s linear;
+        }
+
+
+        /* ================= LAYOUT ================= */
+        .container {
+            display: flex;
+            padding: 30px;
+            gap: 30px;
+        }
+
+        .left-profile-card {
+            width: 330px;
+            background: rgba(17,17,17,0.85);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid cyan;
+            box-shadow: 0 0 25px cyan;
+            text-align: center;
+        }
+
+        .left-profile-card img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #ff00ff;
+            margin-bottom: 15px;
+        }
+
+        .left-profile-card h2 {
+            font-size: 22px;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        .right-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(17,17,17,0.85);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid cyan;
+            box-shadow: 0 0 20px cyan;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-left-color: #ff00ff;
+            box-shadow: 0 0 30px #ff00ff;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: cyan;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        /* ================= GRID FOR GALLERY ================= */
+        .edu-gallery, .activity-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .edu-img-card, .activity-img-card {
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 20px cyan;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .edu-img-card:hover, .activity-img-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px #ff00ff;
+        }
+
+        .edu-img-card img, .activity-img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .edu-img-card:hover .caption,
+        .activity-img-card:hover .caption {
+            opacity: 1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: cyan; border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff00ff; }
+
+        @media screen and (max-width: 900px) {
+            .container { flex-direction: column; }
+            .left-profile-card { width: 100%; }
+            .edu-img-card, .activity-img-card { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-menu-container">
+            <div class="navbar-menu">
+                <a href="index.html">Home</a>
+                <a href="profile.html">Profile</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="esijil.html">E-Sijil</a>
+                <a href="cinema.html">Cinema</a>
+                <a href="cast.html">Cast</a>
+                <a href="logo.html">Logo</a>
+            </div>
+            <div id="digitalClock"></div>
+        </div>
+        <div class="navbar-visualizer">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+
+<div class="container">
+    <!-- LEFT PROFILE -->
+<div class="left-profile-card">
+    <!-- Gambar Utama -->
+    <img src="images/nok_profile.jpg" alt="Profile Picture">
+    <h2>MUHAMMAD AIDIL AZAM BIN MOHD TOP</h2>
+    <h2>20</h2>
+    <h2>johor</h2>
+
+    <!-- Gambar tambahan bawah gambar utama -->
+    <div class="extra-images" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+        <img src="images/nok_profile_1.jpg" alt="Extra 1" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_2.jpg" alt="Extra 2" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_3.jpg" alt="Extra 3" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_4.jpg" alt="Extra 4" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_5.jpg" alt="Extra 5" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_6.jpg" alt="Extra 6" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_7.jpg" alt="Extra 7" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_8.jpg" alt="Extra 8" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+        <img src="images/nok_profile_9.jpg" alt="Extra 9" style="width: 100%; height: 450px; object-fit: cover; border-radius: 12px; border: 3px solid #ff00ff;">
+    </div>
+</div>
+
+
+    <!-- RIGHT CONTENT -->
+    <div class="right-content">
+        <!-- PERSONAL INFO -->
+        <div class="card">
+            <h3>🧍‍♂️ Personal Information</h3>
+            <p>👤 Full Name: Muhammad Aidil Azam Bin Mohd Top</p>
+            <p>🎓 Student ID: 2023826162</p>
+            <p>🪪 Identification Number: 050121-01-0949</p>
+            <p>🎂 Date of Birth: 21 January 2005</p>
+            <p>🏥 Place of Birth: Sultanah Fatimah Hospital, Muar</p>
+            <p>🏡 Address: No. 147, Jalan Waja 4, Bukit Kangkar, Sungai Mati, 84400 Tangkak, Johor</p>
+            <p>⚽ Hobbies: Watching films, video editing, playing futsal</p>
+            <p>💼 Career Aspiration: Information Technology Officer</p>
+            <p>🍛 Favourite Food: Chicken Chop Fried Rice, Roti Canai</p>
+            <p>🥤 Favourite Drink: Iced Milo, Watermelon Juice</p>
+            <p>🚀 Idol: Elon Musk</p>
+            <p>👨‍👩‍👦 Siblings: 3</p>
+            <p>🏠 Family Members: 5</p>
+            <p>💡 Life Principle: “Don’t fear failure, fear not trying.”</p>
+
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="card">
+            <h3>🎓 Education</h3>
+
+            <!-- UiTM -->
+            <div class="edu-block">
+                <h4>UiTM Johor Branch, Segamat (2023-2026)</h4>
+                📍 Address:
+<a href="https://www.google.com/maps/search/?api=1&query=UiTM+Segamat+Johor"
+   target="_blank"
+   style="color:#00ffff; text-decoration:none; text-shadow:0 0 10px cyan;">
+   UiTM Segamat, Jalan Universiti Off KM 12, Jalan Muar, 85000 Segamat, Johor
+</a>
+
+                <div class="edu-gallery">
+                    <div class="edu-img-card"><img src="images/education_1.jpg" alt="UiTM 1"><div class="caption">UiTM 1</div></div>
+                    <div class="edu-img-card"><img src="images/education_2.jpg" alt="UiTM 2"><div class="caption">UiTM 2</div></div>
+                    <div class="edu-img-card"><img src="images/education_3.jpg" alt="UiTM 3"><div class="caption">UiTM 3</div></div>
+                </div>
+                <ul>
+                    <li>Diploma in Information Management (2023 - Present)</li>
+                    <li>CGPA: -</li>
+                    <li>Subjects: Metadata, Electronic Records, Digital Publishing, Database</li>
+                </ul>
+            </div>
+
+            <!-- SMK -->
+            <div class="edu-block">
+                <h4>SMK Tengku Mahmud Iskandar (2018-2022)</h4>
+                📍 Address:
+<a href="https://www.google.com/maps/search/?api=1&query=Batu+8+Sungai+Mati+Johor+84400"
+   target="_blank"
+   style="color:#00ffff; text-decoration:none; text-shadow:0 0 10px cyan;">
+   Batu 8, Sungai Mati, Johor, 84400
+</a>
+                <div class="edu-gallery">
+                    <div class="edu-img-card"><img src="images/smk_1.jpg" alt="SMK 1"><div class="caption">SMK 1</div></div>
+                    <div class="edu-img-card"><img src="images/smk_2.jpg" alt="SMK 2"><div class="caption">SMK 2</div></div>
+                    <div class="edu-img-card"><img src="images/smk_3.jpg" alt="SMK 3"><div class="caption">SMK 3</div></div>
+                </div>
+                <ul>
+                    <li>SPM 2022 — 5A</li>
+                    <li>President, Student Leaders Board (SLB) — 2022</li>
+                    <li>SDKA Rank 1 (2018)</li>
+                </ul>
+            </div>
+
+            <!-- SK -->
+            <div class="edu-block">
+                <h4>SK Bukit Kangkar</h4>
+                📍 Address:
+<a href="https://www.google.com/maps/search/?api=1&query=Bt+9+Jalan+Bukit+Kangkar+Kampung+Parit+Pelampong+84300+Sungai+Mati+Johor"
+   target="_blank"
+   style="color:#00ffff; text-decoration:none; text-shadow:0 0 10px cyan;">
+   Bt 9, Jalan Bukit Kangkar, Kampung Parit Pelampong, 84300 Sungai Mati, Johor Darul Ta'zim
+</a>
+                <div class="edu-gallery">
+                    <div class="edu-img-card"><img src="images/sk_1.jpg" alt="SK 1"><div class="caption">SK 1</div></div>
+                    <div class="edu-img-card"><img src="images/sk_2.jpg" alt="SK 2"><div class="caption">SK 2</div></div>
+                    <div class="edu-img-card"><img src="images/sk_3.jpg" alt="SK 3"><div class="caption">SK 3</div></div>
+                </div>
+                <ul>
+                    <li>UPSR 2017</li>
+                    <li>UPKK 2016 — 8A</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CO-CURRICULAR -->
+        <div class="card">
+            <h3>🏫 Co-Curricular Activities</h3>
+            <p><b>UiTM Johor (MPKK)</b></p>
+            <div class="activity-gallery">
+                <div class="activity-img-card"><img src="images/MPKK_1.jpg" alt="MPKK 1"><div class="caption">MPKK 1</div></div>
+                <div class="activity-img-card"><img src="images/MPKK_2.jpg" alt="MPKK 2"><div class="caption">MPKK 2</div></div>
+                <div class="activity-img-card"><img src="images/MPKK_3.jpg" alt="MPKK 3"><div class="caption">MPKK 3</div></div>
+            </div>
+            <ul>
+                    <li>Majlis Perwakilan Komander Kesatria (MPKK) – Logistics Bureau Chief (2024 – Present)</li>
+                    <li>Majlis Perwakilan Komander Kesatria (MPKK) – Quartermaster I (2025 – Present)</li>
+                    <li>Responsible for managing logistics, storage, and inventory of Kesatria equipment.</li>
+                    <li>Supervised student operations and equipment management during official university programs.</li>
+                    <li>Angkatan Pertahanan Awam Malaysia (APM) Company – Member (2023)</li>
+                    <li>Participated in basic civil defense training, marching drills, and university fitness activities.</li>
+            </ul>
+
+            <p><b>SMK Tengku Mahmud Iskandar</b></p>
+            <div class="activity-gallery">
+                <div class="activity-img-card"><img src="images/SMK_AKTIVITI_1.jpg" alt="SMK Activity 1"><div class="caption">SMK 1</div></div>
+                <div class="activity-img-card"><img src="images/SMK_AKTIVITI_2.jpg" alt="SMK Activity 2"><div class="caption">SMK 2</div></div>
+                <div class="activity-img-card"><img src="images/SMK_AKTIVITI_3.jpg" alt="SMK Activity 3"><div class="caption">SMK 3</div></div>
+            </div>
+            <ul>
+                <li>Participated in the JPJ National Marching Competition 2019 in Selangor.</li>
+                <li>Achieved National Runner-Up (2019).</li>
+                <li>Actively involved in school leadership and community service programs.</li>
+            </ul>
+
+            <p><b>Sekolah Kebangsaan Bukit Kangkar</b></p>
+            <div class="activity-gallery">
+                <div class="activity-img-card"><img src="images/SK_AKTIVITI_1.jpg" alt="SK Activity 1"><div class="caption">SK 1</div></div>
+                <div class="activity-img-card"><img src="images/SK_AKTIVITI_2.jpg" alt="SK Activity 2"><div class="caption">SK 2</div></div>
+                <div class="activity-img-card"><img src="images/SK_AKTIVITI_3.jpg" alt="SK Activity 3"><div class="caption">SK 3</div></div>
+            </div>
+            <ul>
+                <li>Served as the Chairman of the Scouts Uniformed Unit in 2017.</li>
+                <li>Participated in the District Berzanji Competition (2017) and won First Place.</li>
+                <li>Served as the Chairman of the Rukun Negara Club.</li>
+                <li>Held the position of Head Prefect in 2017.</li>
+            </ul>
+        </div>
+
+        <!-- INTERNSHIP -->
+        <div class="card">
+            <h3>💼 Industrial Training Experience</h3>
+            📍 Address:
+<a href="https://www.google.com/maps/search/?api=1&query=Kampung+Tanjung+Laboh+84900+Tangkak+Johor"
+   target="_blank"
+   style="color:#00ffff; text-decoration:none; text-shadow:0 0 10px cyan;">
+   Kampung Tanjung Laboh, 84900 Tangkak, Johor Darul Ta'zim
+</a>
+            <p><b>Tangkak District Council — ICT Maintenance Division</b></p>
+            <div class="activity-gallery">
+                <div class="activity-img-card"><img src="images/INDUSTRI_1.jpg" alt="MPKK 1"><div class="caption">MDT 1</div></div>
+                <div class="activity-img-card"><img src="images/INDUSTRI_2.jpg" alt="MPKK 2"><div class="caption">MDT 2</div></div>
+                <div class="activity-img-card"><img src="images/INDUSTRI_3.jpg" alt="MPKK 3"><div class="caption">MDT 3</div></div>
+            </div>
+            <ul>
+                <li>28 July 2025 – 19 September 2025</li>
+                <li>Software updating & maintenance</li>
+                <li>ICT technical support & servicing</li>
+                <li>Antivirus license renewal & system configuration</li>
+                <li>Secretariat for Merdeka Eve 2025</li>
+                <li>Participant of National Day 2025 Contingent</li>
+            </ul>
+        </div>
+
+        <!-- SKILLS -->
+        <div class="card">
+            <h3>🧠 Skills</h3>
+            <p><b>⚙️ Technical Skills</b></p>
+            <ul>
+                <li>Microsoft Office</li>
+                <li>Data Entry & File Management</li>
+                <li>Graphic Design (Canva, CapCut, Photoshop)</li>
+                <li>Basic ICT & Computer Maintenance</li>
+                <li>SEO, Google Ads</li>
+                <li>AI Tools (ChatGPT)</li>
+                <li>Data Analysis & BI Tools</li>
+                <li>Industrial Machine Handling</li>
+            </ul>
+            <p><b>🌟 Soft Skills</b></p>
+            <ul>
+                <li>Communication (verbal & written)</li>
+                <li>Teamwork</li>
+                <li>Problem Solving</li>
+                <li>Leadership</li>
+                <li>Time Management</li>
+                <li>Stress Management</li>
+            </ul>
+        </div>
+
+        <!-- CONTACT -->
+<div class="card">
+    <h3>📬 Contact & References</h3>
+
+    <!-- FLEX GRID UNTUK GAMBAR + INFO -->
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+
+        <!-- Card Myself -->
+        <div style="flex: 1; min-width: 250px; background: rgba(17,17,17,0.7); padding: 15px; border-radius: 12px; border: 2px solid cyan; box-shadow: 0 0 15px cyan;">
+            <img src="images/contact_1.jpg" alt="Myself" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ff00ff; margin-bottom: 10px;">
+            <p><b>Myself</b></p>
+            <ul>
+    <li>
+        <ul>
+    <li>📍 Address:
+        <a href="https://www.google.com/maps/search/?api=1&query=No+147+Jalan+Waja+4+Bukit+Kangkar+Sungai+Mati+84400+Tangkak+Johor"
+           target="_blank"
+           style="color:#00ffff; text-decoration:none;">
+            No 147, Jalan Waja 4, Bukit Kangkar, Sungai Mati
+        </a>
+    </li>
+
+    <li>📞 Phone: 018-365 6528</li>
+
+    <li>✉️ Email: 2023826162@student.
+        uitm.edu.my</li>
+
+    <li>📸 Instagram:
+        <a href="https://www.instagram.com/__.azdill"
+           target="_blank"
+           class="card-link"
+           style="color:#00ffff; text-decoration:none;">
+            @__.azdill
+        </a>
+    </li>
+</ul>
+
+        </div>
+
+        <!-- Card Father -->
+        <div style="flex: 1; min-width: 250px; background: rgba(17,17,17,0.7); padding: 15px; border-radius: 12px; border: 2px solid cyan; box-shadow: 0 0 15px cyan;">
+            <img src="images/contact_2.jpg" alt="Father" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ff00ff; margin-bottom: 10px;">
+            <p><b>Father</b></p>
+            <ul>
+                <li>👤 Mohd Top Bin Yacob</li>
+                <li>📞 019-684 8589</li>
+                <li>✉️ Top@gmail.com</li>
+            </ul>
+        </div>
+
+        <!-- Card Mother -->
+        <div style="flex: 1; min-width: 250px; background: rgba(17,17,17,0.7); padding: 15px; border-radius: 12px; border: 2px solid cyan; box-shadow: 0 0 15px cyan;">
+            <img src="images/contact_3.jpg" alt="Mother" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ff00ff; margin-bottom: 10px;">
+            <p><b>Mother</b></p>
+            <ul>
+                <li>👤 Fazidah Binti Mohd Selamat</li>
+                <li>📞 012-606 2449</li>
+                <li>✉️ Fazidah@gmail.com</li>
+            </ul>
+        </div>
+
+        <!-- Card Academic Reference -->
+        <div style="flex: 1; min-width: 250px; background: rgba(17,17,17,0.7); padding: 15px; border-radius: 12px; border: 2px solid cyan; box-shadow: 0 0 15px cyan;">
+            <img src="images/academic.jpg" alt="Academic Reference" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #ff00ff; margin-bottom: 10px;">
+            <p><b>Academic Reference</b></p>
+            <ul>
+                <li>Madam Ummu Asyikin Binti Othman</li>
+                <li>Undergraduate Programme Coordinator</li>
+                <li>📞 013-937 7872</li>
+                <li>✉️ ummuasyikin@uitm.edu.my</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+   <script>
+        // Digital Clock
+        function updateClock() {
+            const now = new Date();
+            let h = now.getHours();
+            let m = now.getMinutes();
+            let s = now.getSeconds();
+            h = h < 10 ? '0'+h : h;
+            m = m < 10 ? '0'+m : m;
+            s = s < 10 ? '0'+s : s;
+            document.getElementById('digitalClock').textContent = h + ':' + m + ':' + s;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+        
+
+        // Visualizer Neon
+        const bars = document.querySelectorAll('.navbar-visualizer .bar');
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const bgMusic = document.getElementById('bgMusic');
+        const audioSource = audioCtx.createMediaElementSource(bgMusic);
+        const analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 128;
+        audioSource.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+        function animateVisualizer(){
+            requestAnimationFrame(animateVisualizer);
+            analyser.getByteFrequencyData(dataArray);
+            for(let i=0;i<bars.length;i++){
+                let value = dataArray[i]/255*30+5;
+                bars[i].style.height = value + "px";
+            }
+        }
+        animateVisualizer();
+    </script>
+    
+
+</body>
+</html>

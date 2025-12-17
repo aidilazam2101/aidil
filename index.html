@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avengers Gamers Dashboard – Gamers Neon</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        /* ================= GLOBAL ================= */
+        body {
+            margin: 0;
+            font-family: 'Orbitron', monospace;
+            color: white;
+            background-image: url('images/home_bg.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        /* ================= SCROLLBAR ================= */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: cyan;
+            border-radius: 6px;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-menu-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar a {
+            padding: 10px 14px;
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            text-shadow: 0 0 5px #00ffff;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            background: #00ffff;
+            color: #0d0d0d;
+            text-shadow: 0 0 15px #ff00ff;
+        }
+
+        #digitalClock {
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border: 2px solid #00ffff;
+            border-radius: 6px;
+            text-align: center;
+            text-shadow: 0 0 5px #00ffff, 0 0 15px #ff00ff;
+            position: absolute;
+            right: 0;
+        }
+        /* Visualizer */
+        .navbar-visualizer {
+            width: 100%;
+            height: 20px;
+            display: flex;
+            gap: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .navbar-visualizer .bar {
+            flex: 1;
+            height: 5px;
+            background: linear-gradient(90deg, cyan, magenta, purple, cyan);
+            border-radius: 2px;
+            transition: height 0.05s linear;
+        }
+        /* ===== Avengers Gamers Dashboard ===== */
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #00ffff;
+            text-shadow: 0 0 25px #ff00ff;
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            gap: 30px; /* jarak lebih luas antara card */
+            padding: 30px 20px;
+        }
+
+        .dashboard.top-section { 
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+        }
+        .dashboard.middle-section { 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+        }
+        .dashboard.bottom-section { 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+        }
+
+        /* Card */
+        .card {
+            background: rgba(0,0,0,0.6);
+            border-left: 4px solid #00ffff;
+            box-shadow: 0 0 20px cyan;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            padding: 10px;
+            min-height: 480px;
+        }
+
+        .card img, .card iframe {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .card h3 {
+            color: #00ffff;
+            text-shadow: 0 0 10px #ff00ff;
+            margin: 15px 0;
+        }
+
+        .card:hover {
+            border-left-color: #ff00ff;
+            box-shadow: 0 0 40px #8a2be2;
+            transform: translateY(-5px);
+        }
+
+        /* Tables */
+        table {
+            width:100%;
+            border-collapse: collapse;
+            color: #00ffff;
+            font-family: 'Orbitron', monospace;
+            text-align: center;
+        }
+
+        th, td {
+            border: none;
+            padding: 8px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        td:not(:last-child)::after, th:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 5%;
+            width: 1px;
+            height: 90%;
+            background: #00ffff;
+        }
+
+        td:hover, th:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 25px #ff00ff;
+            cursor: pointer;
+        }
+
+        thead tr { background: rgba(0,0,0,0.8); }
+        tbody tr { background: rgba(0,0,0,0.6); }
+
+        @keyframes neonBlink {
+            0%,100% {color: #39ff14; text-shadow: 0 0 5px #39ff14, 0 0 15px #39ff14;}
+            50% {color: #00ff00; text-shadow: 0 0 15px #00ff00, 0 0 30px #39ff14;}
+        }
+        .neon { font-weight:bold; animation: neonBlink 1s infinite; }
+
+        /* EPL Table */
+        #eplStandings th, #eplStandings td {
+            padding: 6px;
+            border-bottom: 1px solid #00ffff;
+        }
+        #eplStandings th { background: rgba(0,0,0,0.8); }
+        #eplStandings td { background: rgba(0,0,0,0.6); }
+        #eplStandings td:hover { color: #ff00ff; text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff; }
+
+        /* Responsive */
+        @media screen and (max-width: 900px){
+            .dashboard {
+                gap: 20px;
+                padding: 20px 10px;
+            }
+            .card { min-height: 420px; }
+        }
+
+        @media screen and (max-width: 600px){
+            .dashboard { gap: 15px; padding: 15px 10px; }
+            .card img, .card iframe { height: 350px; }
+            #digitalClock { position: relative; right: auto; margin-top: 5px; }
+            .card { min-height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    
+
+<!-- Navbar -->
+<div class="navbar">
+    <div class="navbar-menu-container">
+        <div class="navbar-menu">
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="esijil.html">E-Sijil</a>
+            <a href="cinema.html">Cinema</a>
+            <a href="cast.html">Cast</a>
+            <a href="logo.html">Logo</a>
+        </div>
+        <div id="digitalClock"></div>
+    </div>
+    <div class="navbar-visualizer">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</div>
+
+<h1> WELCOME AIDIL DASHBOARD !</h1>
+
+<!-- Top 6 Cards -->
+<div class="dashboard top-section">
+    <div class="card" onclick="location.href='profile.html'"><img src="images/card_profile.jpg"><h3>Profile</h3></div>
+    <div class="card" onclick="location.href='gallery.html'"><img src="images/card_gallery.jpg"><h3>Gallery</h3></div>
+    <div class="card" onclick="location.href='esijil.html'"><img src="images/card_e-sijil.jpg"><h3>E-Sijil</h3></div>
+    <div class="card" onclick="location.href='cinema.html'"><img src="images/card_cinema.jpg"><h3>Cinema</h3></div>
+    <div class="card" onclick="location.href='cast.html'"><img src="images/card_cast.jpg"><h3>Cast</h3></div>
+    <div class="card" onclick="location.href='logo.html'"><img src="images/card_logo.jpg"><h3>Logo</h3></div>
+</div>
+
+<!-- Middle 3 Cards -->
+<div class="dashboard middle-section">
+    <!-- Gold -->
+    <div class="card">
+        <h3>Public Gold – Gold Price 999 & Dinar</h3>
+        <p><strong>Last Update:</strong> <span id="goldLastUpdate"></span></p>
+        <table>
+            <thead><tr><th>Jenis</th><th>Berat</th><th>Sell (RM)</th><th>Buy (RM)</th></tr></thead>
+            <tbody>
+                <tr><td rowspan="7">Gold Bar</td><td>5 Gram</td><td>3,067</td><td>3,050</td></tr>
+                <tr><td>10 Gram</td><td>6,135</td><td>6,110</td></tr>
+                <tr><td>20 Gram</td><td>12,218</td><td>12,180</td></tr>
+                <tr><td>50 Gram</td><td>30,405</td><td>30,350</td></tr>
+                <tr><td>100 Gram</td><td>60,527</td><td>60,450</td></tr>
+                <tr><td>250 Gram</td><td>150,825</td><td>150,750</td></tr>
+                <tr><td>1 Kilogram</td><td>603,299</td><td>603,200</td></tr>
+                <tr><td rowspan="2">Gold Wafer</td><td>0.5 Gram</td><td class="neon">307</td><td class="neon">300</td></tr>
+                <tr><td>1 Gram</td><td class="neon">610</td><td class="neon">600</td></tr>
+                <tr><td rowspan="3">Dinar</td><td>1 Dinar</td><td>2,602</td><td>2,590</td></tr>
+                <tr><td>5 Dinar</td><td>13,012</td><td>12,950</td></tr>
+                <tr><td>10 Dinar</td><td>26,024</td><td>25,900</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Weather -->
+    <div class="card">
+        <h3>Weather Advance – Segamat</h3>
+        <iframe src="https://embed.windy.com/embed2.html?lat=2.49&lon=102.79&zoom=6&level=surface&overlay=rain&product=ecmwf"
+            style="width:100%; height:450px; border-radius:12px; border:none;"></iframe>
+    </div>
+
+    <!-- Currency -->
+    <div class="card">
+        <h3>Global Currency Rate (1 KWD )</h3>
+        <p><strong>Last Update:</strong> <span id="currencyLastUpdate"></span></p>
+        <table>
+            <thead><tr><th>Mata Wang</th><th>Negara</th><th>1 KWD </th></tr></thead>
+            <tbody>
+                <tr><td>MYR</td><td>Malaysia</td><td>14.7</td></tr>
+                <tr><td>USD</td><td>USA</td><td>4.85</td></tr>
+                <tr><td>EUR</td><td>Eurozone</td><td>4.42</td></tr>
+                <tr><td>GBP</td><td>United Kingdom</td><td>3.85</td></tr>
+                <tr><td>JPY</td><td>Japan</td><td>668</td></tr>
+                <tr><td>SGD</td><td>Singapore</td><td>5.35</td></tr>
+                <tr><td>AUD</td><td>Australia</td><td>6.0</td></tr>
+                <tr><td>CAD</td><td>Canada</td><td>5.58</td></tr>
+                <tr><td>CNY</td><td>China</td><td>3.11</td></tr>
+                <tr><td>INR</td><td>India</td><td>415</td></tr>
+                <tr><td>THB</td><td>Thailand</td><td>33.1</td></tr>
+                <tr><td>IDR</td><td>Indonesia</td><td>1,500,000</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bottom 1: EPL Standings + Spotify -->
+<div class="dashboard bottom-section">
+    <!-- EPL Standings -->
+    <div class="card">
+        <h3>English Premier League Standings (Terkini)</h3>
+        <table id="eplStandings">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Club</th>
+                    <th>MP</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>GF</th>
+                    <th>GA</th>
+                    <th>GD</th>
+                    <th>Pts</th>
+                    <th>Last 5</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Spotify -->
+    <div class="card">
+        <h3>Spotify – Favorite Tracks</h3>
+        <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" 
+            width="100%" height="450" frameborder="0" allowtransparency="true" allow="encrypted-media" 
+            style="border-radius:12px; border:none;"></iframe>
+    </div>
+</div>
+
+<!-- Bottom 2: TradingView -->
+<div class="dashboard bottom-section">
+    <div class="card">
+        <h3>XAUUSD Live Chart</h3>
+        <iframe src="https://s.tradingview.com/widgetembed/?symbol=XAUUSD&interval=60&hidesidetoolbar=1&theme=dark&style=1"
+            style="width:100%; height:500px; border-radius:12px; border:none;"></iframe>
+    </div>
+</div>
+
+<script>
+    // Update clock & last update
+    function updateAllTime() {
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2,'0');
+        const month = String(now.getMonth()+1).padStart(2,'0');
+        const year = now.getFullYear();
+        const h = String(now.getHours()).padStart(2,'0');
+        const m = String(now.getMinutes()).padStart(2,'0');
+        const s = String(now.getSeconds()).padStart(2,'0');
+        const formattedTime = `${day}/${month}/${year} ${h}:${m}:${s}`;
+
+        document.getElementById('goldLastUpdate').textContent = formattedTime;
+        document.getElementById('currencyLastUpdate').textContent = formattedTime;
+        document.getElementById('digitalClock').textContent = h+':'+m+':'+s;
+    }
+    setInterval(updateAllTime,1000);
+    updateAllTime();
+
+    // EPL Data
+    const eplData = [
+      {rank:1, club:"Arsenal", mp:15, w:10, d:3, l:2, gf:28, ga:9, gd:19, pts:33, last5:"Draw,Win,Draw,Win,Loss"},
+      {rank:2, club:"Man City", mp:15, w:10, d:1, l:4, gf:35, ga:16, gd:19, pts:31, last5:"Win,Loss,Win,Win,Win"},
+      {rank:3, club:"Aston Villa", mp:15, w:9, d:3, l:3, gf:22, ga:15, gd:7, pts:30, last5:"Win,Win,Win,Win,Win"},
+      {rank:4, club:"Crystal Palace", mp:15, w:7, d:5, l:3, gf:20, ga:12, gd:8, pts:26, last5:"Draw,Win,Loss,Win,Win"},
+      {rank:5, club:"Chelsea", mp:15, w:7, d:4, l:4, gf:25, ga:15, gd:10, pts:25, last5:"Win,Win,Draw,Loss,Draw"},
+      {rank:6, club:"Man United", mp:15, w:7, d:4, l:4, gf:26, ga:22, gd:4, pts:25, last5:"Draw,Loss,Win,Draw,Win"},
+      {rank:7, club:"Everton", mp:15, w:7, d:3, l:5, gf:18, ga:17, gd:1, pts:24, last5:"Win,Win,Loss,Win,Win"},
+      {rank:8, club:"Brighton", mp:15, w:6, d:5, l:4, gf:25, ga:21, gd:4, pts:23, last5:"Draw,Win,Win,Loss,Draw"},
+      {rank:9, club:"Sunderland", mp:15, w:6, d:5, l:4, gf:18, ga:17, gd:1, pts:23, last5:"Draw,Loss,Win,Draw,Loss"},
+      {rank:10, club:"Liverpool", mp:15, w:7, d:2, l:6, gf:24, ga:24, gd:0, pts:23, last5:"Loss,Loss,Win,Draw,Draw"},
+      {rank:11, club:"Tottenham", mp:15, w:6, d:4, l:5, gf:25, ga:18, gd:7, pts:22, last5:"Draw,Loss,Loss,Draw,Win"},
+      {rank:12, club:"Newcastle", mp:15, w:6, d:4, l:5, gf:21, ga:19, gd:2, pts:22, last5:"Loss,Win,Win,Draw,Win"},
+      {rank:13, club:"Bournemouth", mp:15, w:5, d:5, l:5, gf:21, ga:24, gd:-3, pts:20, last5:"Loss,Draw,Loss,Loss,Draw"},
+      {rank:14, club:"Brentford", mp:15, w:6, d:1, l:8, gf:21, ga:24, gd:-3, pts:19, last5:"Win,Loss,Win,Loss,Loss"},
+      {rank:15, club:"Fulham", mp:15, w:5, d:2, l:8, gf:20, ga:24, gd:-4, pts:17, last5:"Loss,Win,Win,Loss,Loss"},
+      {rank:16, club:"Leeds United", mp:15, w:4, d:3, l:8, gf:19, ga:29, gd:-10, pts:15, last5:"Loss,Loss,Loss,Win,Draw"},
+      {rank:17, club:"Nottm Forest", mp:15, w:4, d:3, l:8, gf:14, ga:25, gd:-11, pts:15, last5:"Win,Win,Loss,Win,Loss"},
+      {rank:18, club:"West Ham", mp:15, w:3, d:4, l:8, gf:17, ga:29, gd:-12, pts:13, last5:"Win,Draw,Loss,Draw,Draw"},
+      {rank:19, club:"Burnley", mp:15, w:3, d:1, l:11, gf:16, ga:30, gd:-14, pts:10, last5:"Loss,Loss,Loss,Loss,Loss"},
+      {rank:20, club:"Wolves", mp:15, w:0, d:2, l:13, gf:8, ga:33, gd:-25, pts:2, last5:"Loss,Loss,Loss,Loss,Loss"}
+    ];
+
+    const tbody = document.querySelector("#eplStandings tbody");
+    eplData.forEach(team => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${team.rank}</td>
+            <td>${team.club}</td>
+            <td>${team.mp}</td>
+            <td>${team.w}</td>
+            <td>${team.d}</td>
+            <td>${team.l}</td>
+            <td>${team.gf}</td>
+            <td>${team.ga}</td>
+            <td>${team.gd}</td>
+            <td>${team.pts}</td>
+            <td>${team.last5}</td>
+        `;
+        tbody.appendChild(row);
+    });
+</script>
+
+</body>
+</html>

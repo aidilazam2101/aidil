@@ -1,0 +1,149 @@
+/* ==============================
+   GLOBAL STYLE UNTUK SEMUA PAGE
+   ============================== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+/* Top Navbar – Gradient Gelap */
+.navbar {
+    width: 100%;
+    background: linear-gradient(90deg, #1a1a1a, #333333); /* hitam ke kelabu gelap */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.navbar a {
+    padding: 12px 18px;
+    margin: 5px;
+    color: #00ffff;  /* neon cyan untuk teks */
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    text-shadow: 0 0 3px #00ffff;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    background: #00ffff;  /* neon highlight */
+    color: #0d0d0d;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+
+/* ==============================
+   MAIN CONTENT
+   ============================== */
+.main-content {
+    padding: 50px;
+    text-align: center;
+}
+
+.main-content h1 {
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px cyan;
+    margin-top: 0;
+}
+
+.main-content p {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.back {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* ==============================
+   THEME SPECIFIC
+   ============================== */
+body.home {background: #0b0e24; color: white;}
+body.ironman {background: #2b0000; color: #ffd700;}
+body.thor {background: #050d2d; color: #9bd2ff;}
+body.strange {background: #1a002e; color: #d7b4ff;}
+body.spiderman {background: #0b0030; color: white;}
+
+/* Responsive navbar */
+@media screen and (max-width: 768px) {
+    .navbar a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    margin: 0;
+    color: white;
+    background-image: url('images/home_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+.dashboard .card {
+    background: rgba(0, 0, 0, 0.6);
+    border-left: 4px solid #00ffff;
+    box-shadow: 0 0 15px cyan;
+}
+.cast-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.65);
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid #00ffff;
+    box-shadow: 0 0 20px cyan;
+    width: 90%;
+    max-width: 900px;
+    gap: 20px;
+    transition: 0.3s;
+}
+/* CARD GALLERY STYLE LIKE YOUR SAMPLE */
+.edu-gallery-card {
+    background: rgba(0,0,0,0.6);
+    border-radius: 18px;
+    padding: 10px;
+    border: 3px solid #00ffff;
+    box-shadow: 0 0 25px #00ffff;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.edu-gallery-card:hover {
+    box-shadow: 0 0 35px #ff00ff;
+    border-color: #ff00ff;
+}
+
+.edu-gallery-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid #00ffff;
+    box-shadow: 0 0 20px #00ffff;
+    transition: 0.3s;
+}
+
+.edu-gallery-card img:hover {
+    border-color: #ff00ff;
+    box-shadow: 0 0 30px #ff00ff;
+    transform: scale(1.03);
+}
+
+.edu-caption {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+}
+
