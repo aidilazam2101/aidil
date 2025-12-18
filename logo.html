@@ -1,208 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Social Media Links – Avengers Gamers Neon</title>
+<meta charset="UTF-8">
+<title>Cinema – Gamers Neon</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-        /* ================= GLOBAL ================= */
-        body {
-            margin: 0;
-            font-family: 'Orbitron', monospace;
-            background: url('..images/logo_bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            overflow-x: hidden;
-        }
+/* ================= RESET ================= */
+* { box-sizing: border-box; }
 
-        /* ================= SCROLLBAR ================= */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
+body {
+    margin: 0;
+    font-family: 'Orbitron', monospace;
+    background: transparent !important;
+    color: white;
+    overflow-x: hidden;
+}
 
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
+/* ================= FIXED BACKGROUND ================= */
+.cinema-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url("images/cinema_bg.jpg") no-repeat center center;
+    background-size: cover;
+    z-index: -999;
+}
 
-        ::-webkit-scrollbar-thumb {
-            background: cyan;
-            border-radius: 6px;
-            box-shadow: 0 0 10px cyan;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff00ff;
-            box-shadow: 0 0 15px #ff00ff;
-        }
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb {
+    background: cyan;
+    border-radius: 6px;
+    box-shadow: 0 0 10px cyan;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ff00ff;
+    box-shadow: 0 0 15px #ff00ff;
+}
 
 /* ================= NAVBAR ================= */
 .navbar {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    padding: 10px 20px;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
     position: sticky;
     top: 0;
     z-index: 1000;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }
 
-.navbar-menu-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
+.navbar-inner {
     max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
     position: relative;
+}
+
+.navbar a {
+    color: cyan;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-shadow: 0 0 5px cyan;
+    transition: .3s;
+}
+
+.navbar a:hover {
+    background: cyan;
+    color: #111;
+    text-shadow: 0 0 15px magenta;
 }
 
 .navbar-menu {
     display: flex;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-}
-
-.navbar a {
-    padding: 10px 14px;
-    color: #00ffff;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 6px;
-    text-shadow: 0 0 5px #00ffff;
-    transition: 0.3s;
-}
-
-.navbar a:hover {
-    background: #00ffff;
-    color: #111;
-    text-shadow: 0 0 15px #ff00ff;
+    gap: 14px;
 }
 
 #digitalClock {
-    font-family: 'Orbitron', monospace;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 4px 10px;
-    border: 2px solid #00ffff;
-    border-radius: 6px;
-    text-align: center;
-    text-shadow: 0 0 5px #00ffff, 0 0 15px #ff00ff;
     position: absolute;
-    right: 0;
-}
-
-.navbar-visualizer {
-    width: 100%;
-    height: 20px;
-    display: flex;
-    gap: 2px;
-    margin-top: 5px;
-    overflow: hidden;
-}
-
-.navbar-visualizer .bar {
-    flex: 1;
-    height: 5px;
-    background: linear-gradient(90deg, cyan, magenta, purple, cyan);
-    border-radius: 2px;
-    transition: height 0.05s linear;
+    right: 15px;
+    padding: 4px 10px;
+    border: 2px solid cyan;
+    border-radius: 6px;
+    text-shadow: 0 0 10px magenta;
 }
 
 /* ================= TITLE ================= */
 h1 {
     text-align: center;
-    margin-top: 50px;
-    color: #00ffff;
-    text-shadow: 0 0 25px #ff00ff;
-    font-size: 48px;
+    margin: 50px 0 20px;
+    font-size: 42px;
+    color: cyan;
+    text-shadow: 0 0 30px magenta;
 }
 
-/* ================= SOCIAL CARDS ================= */
-.logo-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 40px 20px;
+/* ================= MOVIE GRID ================= */
+.cinema-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
 }
 
-.card-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.logo-card {
-    background: rgba(17,17,17,0.8);
-    padding: 20px;
+.movie-card {
+    background: rgba(17,17,17,0.85);
     border-radius: 15px;
-    border-left: 4px solid #00ffff;
-    box-shadow: 0 0 20px cyan;
-    width: 220px;
-    text-align: center;
-    transition: 0.3s;
-    position: relative;
+    overflow: hidden;
+    border: 3px solid cyan;
+    box-shadow: 0 0 25px cyan;
+    transition: .3s;
 }
 
-.logo-card:hover {
+.movie-card:hover {
     transform: translateY(-6px) scale(1.02);
-    border-left-color: #ff00ff;
-    box-shadow: 0 0 35px #ff00ff;
+    border-color: magenta;
+    box-shadow: 0 0 40px magenta;
 }
 
-.logo-card::after {
-    content: "CLICK TO OPEN";
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    letter-spacing: 2px;
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.logo-card:hover::after {
-    opacity: 1;
-}
-
-.logo-card img {
+.movie-card img {
     width: 100%;
-    border-radius: 12px;
+    height: 340px;
+    object-fit: cover;
 }
 
-.logo-card h3 {
-    margin: 10px 0;
-    color: #00ffff;
+.movie-card h3 {
+    text-align: center;
+    margin: 15px 0;
+    color: cyan;
+    text-shadow: 0 0 10px magenta;
 }
 
-/* ================= ICONS ================= */
-.social-links i {
-    font-size: 28px;
+.movie-card p {
+    text-align: center;
+    font-size: 14px;
+    padding-bottom: 15px;
+    opacity: .85;
 }
-
-.social-instagram { color: #f58529; }
-.social-whatsapp { color: #25D366; }
-.social-facebook { color: #1877F2; }
-.social-linkedin { color: #0A66C2; }
-.social-email { color: #ffcc00; }
 
 /* ================= RESPONSIVE ================= */
-@media(max-width: 900px) { .logo-card { width: 45%; } }
-@media(max-width: 500px) { .logo-card { width: 90%; } }
+@media(max-width: 600px){
+    h1 { font-size: 32px; }
+    .movie-card img { height: 260px; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+<!-- BACKGROUND -->
+<div class="cinema-bg"></div>
+
+<!-- NAVBAR -->
 <div class="navbar">
-    <div class="navbar-menu-container">
+    <div class="navbar-inner">
         <div class="navbar-menu">
             <a href="index.html">Home</a>
             <a href="profile.html">Profile</a>
@@ -214,78 +176,46 @@ h1 {
         </div>
         <div id="digitalClock"></div>
     </div>
-    <div class="navbar-visualizer">
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-        <div class="bar"></div>
-    </div>
 </div>
 
-<h1>SOCIAL MEDIA LINKS</h1>
+<h1>🎬 CINEMA COLLECTION</h1>
 
-<div class="logo-container">
+<!-- MOVIES -->
+<div class="cinema-container">
 
-<a href="https://www.instagram.com/__.azdill" target="_blank" class="card-link">
-    <div class="logo-card">
-        <img src="images/LOGO_1.jpg">
-        <h3>Instagram</h3>
-        <div class="social-links">
-            <i class="fab fa-instagram social-instagram"></i>
-        </div>
+    <div class="movie-card">
+        <img src="images/movie_1.jpg">
+        <h3>Avengers</h3>
+        <p>Action • Sci‑Fi</p>
     </div>
-</a>
 
-<a href="https://wa.me/60183656528" target="_blank" class="card-link">
-<div class="logo-card">
-    <img src="images/LOGO_2.jpg">
-    <h3>WhatsApp</h3>
-    <div class="social-links">
-        <i class="fab fa-whatsapp social-whatsapp"></i>
+    <div class="movie-card">
+        <img src="images/movie_2.jpg">
+        <h3>Batman</h3>
+        <p>Action • Dark</p>
     </div>
-</div>
-</a>
 
-<a href="https://www.facebook.com/aidilazam.azdill" target="_blank" class="card-link">
-    <div class="logo-card">
-        <img src="images/LOGO_3.jpg">
-        <h3>Facebook</h3>
-        <div class="social-links">
-            <i class="fab fa-facebook social-facebook"></i>
-        </div>
+    <div class="movie-card">
+        <img src="images/movie_3.jpg">
+        <h3>Interstellar</h3>
+        <p>Sci‑Fi • Space</p>
     </div>
-</a>
 
-<a href="https://www.linkedin.com/in/muhammad-aidil-azam-bin-mohd-top-0773aa381/" target="_blank" style="text-decoration: none;">
-    <div class="logo-card">
-        <img src="images/LOGO_4.jpg" alt="LinkedIn">
-        <h3>LinkedIn</h3>
-        <div class="social-links">
-            <i class="fab fa-linkedin social-linkedin"></i>
-        </div>
+    <div class="movie-card">
+        <img src="images/movie_4.jpg">
+        <h3>John Wick</h3>
+        <p>Action • Thriller</p>
     </div>
-</a>
-
-
-<a href="mailto:aidilazam2101@gmail.com?subject=Hello%20Aidil&body=Hi%20Aidil,%0A%0AI%20would%20like%20to%20contact%20you%20regarding..." class="card-link">
-    <div class="logo-card">
-        <img src="images/LOGO_5.jpg" alt="Email">
-        <h3>Email</h3>
-        <div class="social-links">
-            <i class="fas fa-envelope social-email"></i>
-        </div>
-    </div>
-</a>
 
 </div>
 
 <script>
 function updateClock(){
     const n = new Date();
-    document.getElementById("digitalClock").textContent =
-    String(n.getHours()).padStart(2,'0') + ":" +
-    String(n.getMinutes()).padStart(2,'0') + ":" +
-    String(n.getSeconds()).padStart(2,'0');
+    document.getElementById('digitalClock').textContent =
+        String(n.getHours()).padStart(2,'0') + ':' +
+        String(n.getMinutes()).padStart(2,'0') + ':' +
+        String(n.getSeconds()).padStart(2,'0');
 }
 setInterval(updateClock,1000);
 updateClock();
@@ -293,6 +223,8 @@ updateClock();
 
 </body>
 </html>
+
+
 
 
 
